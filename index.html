@@ -4,6 +4,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>EggHead React</title>
+	<style type="text/css">
+	.box {
+		border: solid 1px;
+	}
+	.box--big{
+		width: 120px;
+		height: 120px;
+	}
+	.box--small{
+		width: 60px;
+		height: 60px;
+	}
+	</style>
 </head>
 
 <body>
@@ -13,13 +26,10 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	function tick(){
-		const rootElement = document.getElementById('root');
-		const time = new Date().toLocaleTimeString();
-		const element = <div>It is {time}</div>
-		ReactDOM.render(element, rootElement);
-	}
-	setInterval(tick,1000);
+	const element = (
+		<div className="box box--small" style={{paddingLeft:'30px'}}>box</div>
+	)
+	ReactDOM.render(element, document.getElementById('root'));
 	</script>
 </body>
 
