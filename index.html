@@ -26,8 +26,12 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
+	const props = {
+		className:"box box--small",
+		style:{paddingLeft:30}
+	}
 	const element = (
-		<div className="box box--small" style={{paddingLeft:'30px'}}>box</div>
+		<div {...props}>box</div>
 	)
 	ReactDOM.render(element, document.getElementById('root'));
 	</script>
