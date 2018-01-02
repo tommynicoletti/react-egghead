@@ -26,12 +26,23 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	const props = {
-		className:"box box--small",
-		style:{paddingLeft:30}
+	function Box({style, className='',...rest}){
+		return (
+			<div
+				className={`box ${className}`}
+				style={{paddingLeft:'30px', ...style}}
+				{...rest} />
+		);
 	}
 	const element = (
-		<div {...props}>box</div>
+		<div>
+			<Box
+			 	className="box--small"
+				style={{backgroundColor:'lightblue'}}>small box</Box>
+			<Box
+			 	className="box--big"
+				style={{backgroundColor:'pink'}}>Big box</Box>
+		</div>
 	)
 	ReactDOM.render(element, document.getElementById('root'));
 	</script>
