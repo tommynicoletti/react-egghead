@@ -12,16 +12,20 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	function StopWatch({running, lapse}){
-		return (
-			<div>
-				<p><label>{lapse} ms</label></p>
-				<p><button>{running ? 'Stop' : 'Start'}</button></p>
-				<p><button>Clear</button></p>
-			</div>
-		);
+	class StopWatch extends React.Component{
+		state = {lapse:0,running:false};
+		render(){
+			const {lapse,running} = this.state;
+			return (
+				<div>
+					<p><label>{lapse} ms</label></p>
+					<p><button>{running ? 'Stop' : 'Start'}</button></p>
+					<p><button>Clear</button></p>
+				</div>
+			)
+		}
 	}
-	const element = <StopWatch running={false} lapse={0} />
+	const element = <StopWatch />
 	ReactDOM.render(element, document.getElementById('root'));
 	</script>
 </body>
