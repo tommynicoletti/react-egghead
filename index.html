@@ -14,8 +14,7 @@
 	<script type="text/babel">
 	class Counter extends React.Component{
 		state = {count: 0};
-		increment = this.increment.bind(this);
-		increment(){
+		increment = () => {
 			this.setState((prevState) => {
 				return {count: prevState.count+1}
 			})
