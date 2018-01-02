@@ -13,11 +13,8 @@
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
 	class Counter extends React.Component{
-		constructor(...args){
-			super(...args);
-			this.state = {count: 0};
-			this.increment = this.increment.bind(this);
-		}
+		state = {count: 0};
+		increment = this.increment.bind(this);
 		increment(){
 			this.setState((prevState) => {
 				return {count: prevState.count+1}
