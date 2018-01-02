@@ -4,53 +4,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>EggHead React</title>
-	<style type="text/css">
-	.box {
-		border: solid 1px;
-	}
-	.box--big{
-		width: 120px;
-		height: 120px;
-	}
-	.box--small{
-		width: 60px;
-		height: 60px;
-	}
-	</style>
 </head>
 
 <body>
-	<div id="root">
-	</div>
+	<div id="root"></div>
 	<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	const state = {eventCount: 0, username: ''};
-	function App(){
+	function StopWatch({running, lapse}){
 		return (
 			<div>
-				<p>There have been {state.eventCount} events</p>
-				<p><button onClick={increment}>☮️</button></p>
-				<p>You typed: {state.username}</p>
-				<p><input onChange={updateUsername}/></p>
+				<p><label>{lapse} ms</label></p>
+				<p><button>{running ? 'Stop' : 'Start'}</button></p>
+				<p><button>Clear</button></p>
 			</div>
-		)
+		);
 	}
-	function updateUsername(event){
-		setState({username: event.target.value});
-	}
-	function increment(){
-		setState({eventCount: state.eventCount+1})
-	}
-	function setState(newState){
-		Object.assign(state,newState);
-		renderApp();
-	}
-	function renderApp(){
-		ReactDOM.render(<App />, document.getElementById('root'));
-	}
-	renderApp();
+	const element = <StopWatch running={false} lapse={0} />
+	ReactDOM.render(element, document.getElementById('root'));
 	</script>
 </body>
 
