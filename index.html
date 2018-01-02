@@ -39,8 +39,20 @@
 			const {items} = this.state;
 			return (
 				<div>
-					{App.allItems.map(item => (
-						<div key={item.id}>{item.value}</div>
+					<button
+						disabled={items.length >= App.allItems.length}
+						onClick={this.addItem}
+					>
+						+
+					</button>
+					{items.map( (i,index) => (
+						<div key={i.id}>
+							<button onClick={ () => this.removeItem(i)}>
+								-
+							</button>
+							{i.value}:
+							<input key={i.id}/>
+						</div>
 					))}
 				</div>
 			);
