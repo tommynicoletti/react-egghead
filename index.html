@@ -16,6 +16,7 @@
 		constructor(...args){
 			super(...args);
 			this.state = {count: 0};
+			this.increment = this.increment.bind(this);
 		}
 		increment(){
 			this.setState((prevState) => {
@@ -25,7 +26,7 @@
 		render(){
 			return (
 				<span>
-					<button onClick={this.increment.bind(this)}>{this.state.count}</button>
+					<button onClick={this.increment}>{this.state.count}</button>
 				</span>
 			);
 		}
