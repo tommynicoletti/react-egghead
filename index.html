@@ -12,58 +12,25 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	class Watch extends React.Component{
-		state = {isVisible:true};
-		handleClick = () => {
-			this.setState ( (prevState,props) => {
-				return {isVisible : !prevState.isVisible};
+	class Counter extends React.Component{
+		constructor(...args){
+			super(...args);
+			this.state = {count: 0};
+		}
+		increment = () => {
+			this.setState((prevState) => {
+				return {count: prevState.count+1}
 			})
 		}
 		render(){
 			return (
 				<span>
-					<div><input onClick={this.handleClick} type="checkbox" />Show or hide</div>
-					<div>{ this.state.isVisible ? <StopWatch /> : null }</div>
+					<button onClick={this.increment}>{this.state.count}</button>
 				</span>
 			);
 		}
 	}
-	class StopWatch extends React.Component{
-		state = {lapse:0,running:false};
-		handleRunClick = () => {
-			this.setState( state => {
-				if(state.running){
-					clearInterval(this.timer);
-				} else {
-					const startTime = Date.now() - this.state.lapse;
-					this.timer = setInterval(()=>{
-						this.setState({lapse: Date.now()-startTime}, () => {
-							console.log(this.state.lapse);
-						})
-					})
-				}
-				return {running: !state.running};
-			});
-		}
-		handleClearClick = () => {
-			clearInterval(this.timer);
-			this.setState({lapse:0,running:false});
-		}
-		componentWillUnmount(){
-			clearInterval(this.timer);
-		}
-		render(){
-			const {lapse,running} = this.state;
-			return (
-				<div>
-					<p><label>{lapse} ms</label></p>
-					<p><button onClick={this.handleRunClick}>{running ? 'Stop' : 'Start'}</button></p>
-					<p><button onClick={this.handleClearClick}>Clear</button></p>
-				</div>
-			)
-		}
-	}
-	const element = <Watch />
+	const element = <Counter />
 	ReactDOM.render(element, document.getElementById('root'));
 	</script>
 </body>
