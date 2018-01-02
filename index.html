@@ -26,26 +26,25 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	function Box({style, size, className='',...rest}){
-		const sizeClassName = size ? `box--${size}` : '';
+	const state = {eventCount: 0, username: ''};
+	function App(){
 		return (
-			<div
-				className={`box ${className} ${sizeClassName}`}
-				style={{paddingLeft:'30px', ...style}}
-				{...rest} />
+			<div>
+				<p>There have been {state.eventCount} events</p>
+				<p><button>☮️</button></p>
+				<p>You typed: {state.username}</p>
+				<p><input /></p>
+			</div>
 		);
 	}
-	const element = (
-		<div>
-			<Box
-			 	size="small"
-				style={{backgroundColor:'lightblue'}}>small box</Box>
-			<Box
-			 	size="big"
-				style={{backgroundColor:'pink'}}>Big box</Box>
-		</div>
-	)
-	ReactDOM.render(element, document.getElementById('root'));
+	function setState(newState){
+		Object.assign(state,newState);
+		renderApp();
+	}
+	function renderApp(){
+		ReactDOM.render(<App />, document.getElementById('root'));
+	}
+	renderApp();
 	</script>
 </body>
 
