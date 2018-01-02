@@ -12,50 +12,99 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	class NameForm extends React.Component{
-		state = {error:null};
-		handleSubmit = (event) => {
-			event.preventDefault();
-			const value = event.target.elements.username.value;
-			const error = this.props.getErrorMessage(value);
-			if(error){
-				alert(`Error: ${error}`);
-			} else {
-				alert(`Success: ${value}`);
-			}
-		}
-		handleChange = (event) => {
+	class MyFancyForm extends React.Component{
+		static availableOptions = [
+			'apple',
+			'grape',
+			'cherry',
+			'orange',
+			'pear',
+			'peach'
+		];
+		state = {multiline:'',commaSeparated:'',multiselect:[]}
+		handleCommaSeparatedChange = event => {
 			const {value} = event.target;
-			this.setState({error:this.props.getErrorMessage(value)})
+			const allVals = value
+				.split(',')
+				.map( v => v.trim())
+				.filter(Boolean);
+			this.setState({
+				commaSeparated:value,
+				multiline: allVals
+					.join('\n'),
+				multiselect: allVals
+					.filter( v => MyFancyForm.availableOptions.includes(v))
+			})
 		}
-		componentDidMount(){
-			this.setState({error:this.props.getErrorMessage('')})
+		handleMultilineChange = event => {
+			const {value} = event.target;
+			const allVals = value
+				.split('\n')
+				.map( v => v.trim())
+				.filter(Boolean);
+			this.setState({
+				multiline: value,
+				commaSeparated: allVals
+					.join(','),
+				multiselect: allVals
+					.filter( v => MyFancyForm.availableOptions.includes(v))
+			})
+		}
+		handleMultiSelectChange = event => {
+			const allVals = Array.from(
+				event.target.selectedOptions).map(o => o.value);
+			this.setState({
+				multiselect: allVals,
+				multiline: allVals.join('\n'),
+				commaSeparated: allVals.join(',')
+			})
 		}
 		render(){
-			const {error} = this.state;
+			const {commaSeparated, multiline, multiselect} = this.state;
 			return (
-				<form onSubmit={this.handleSubmit}>
-					<label>
-						Name:
-						<input onChange={this.handleChange} type="text" name="username" ref={node => this.inputNode = node} />
-					</label>
-					{error ? <div style={{color:'red'}}>{error}</div> : null}
-					<button disabled={Boolean(error)} type="submit">Submit</button>
+				<form>
+					<div>
+						<p>Comma separated values:</p>
+						<p>
+							<input
+								type="text"
+								value={commaSeparated}
+								onChange={this.handleCommaSeparatedChange}
+							/>
+						</p>
+					</div>
+					<div>
+						<p>MultiLine separated values:</p>
+						<p>
+							<textarea
+								value={multiline}
+								rows={MyFancyForm.availableOptions.length}
+								onChange={this.handleMultilineChange}
+							/>
+						</p>
+					</div>
+					<div>
+						<p>MultiSelect values:</p>
+						<p>
+							<select
+								value={multiselect}
+								multiple
+								size={MyFancyForm.availableOptions.length}
+								onChange={this.handleMultiSelectChange}
+							>
+								{MyFancyForm.availableOptions.map (
+									optionValue => (
+										<option key={optionValue} value={optionValue}>{optionValue}</option>
+									)
+								)}
+							</select>
+						</p>
+					</div>
 				</form>
 			);
 		}
 	}
-	ReactDOM.render(<NameForm
-			getErrorMessage={value => {
-				if(value.length <3){
-					return `Value must be at least 3 characters, but was only ${value.length}`;
-				}
-				if(!value.includes('s')){
-					return `Value does not include "s" character, but was ${value}`;
-				}
-				return null;
-			}}
-		/>, document.getElementById('root'));
+	ReactDOM.render(<MyFancyForm />, document.getElementById('root'));
 	</script>
 </body>
 
