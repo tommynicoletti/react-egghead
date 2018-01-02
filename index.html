@@ -26,10 +26,11 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
-	function Box({style, className='',...rest}){
+	function Box({style, size, className='',...rest}){
+		const sizeClassName = size ? `box--${size}` : '';
 		return (
 			<div
-				className={`box ${className}`}
+				className={`box ${className} ${sizeClassName}`}
 				style={{paddingLeft:'30px', ...style}}
 				{...rest} />
 		);
@@ -37,10 +38,10 @@
 	const element = (
 		<div>
 			<Box
-			 	className="box--small"
+			 	size="small"
 				style={{backgroundColor:'lightblue'}}>small box</Box>
 			<Box
-			 	className="box--big"
+			 	size="big"
 				style={{backgroundColor:'pink'}}>Big box</Box>
 		</div>
 	)
