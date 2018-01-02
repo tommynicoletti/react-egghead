@@ -31,11 +31,17 @@
 		return (
 			<div>
 				<p>There have been {state.eventCount} events</p>
-				<p><button>☮️</button></p>
+				<p><button onClick={increment}>☮️</button></p>
 				<p>You typed: {state.username}</p>
-				<p><input /></p>
+				<p><input onChange={updateUsername}/></p>
 			</div>
-		);
+		)
+	}
+	function updateUsername(event){
+		setState({username: event.target.value});
+	}
+	function increment(){
+		setState({eventCount: state.eventCount+1})
 	}
 	function setState(newState){
 		Object.assign(state,newState);
