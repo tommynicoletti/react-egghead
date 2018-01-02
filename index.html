@@ -12,24 +12,45 @@
 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script type="text/babel">
+	class Watch extends React.Component{
+		state = {isVisible:true};
+		handleClick = () => {
+			this.setState ( (prevState,props) => {
+				return {isVisible : !prevState.isVisible};
+			})
+		}
+		render(){
+			return (
+				<span>
+					<div><input onClick={this.handleClick} type="checkbox" />Show or hide</div>
+					<div>{ this.state.isVisible ? <StopWatch /> : null }</div>
+				</span>
+			);
+		}
+	}
 	class StopWatch extends React.Component{
 		state = {lapse:0,running:false};
 		handleRunClick = () => {
 			this.setState( state => {
 				if(state.running){
-					clearInterval(this.timer)
+					clearInterval(this.timer);
 				} else {
 					const startTime = Date.now() - this.state.lapse;
 					this.timer = setInterval(()=>{
-						this.setState({lapse: Date.now()-startTime})
+						this.setState({lapse: Date.now()-startTime}, () => {
+							console.log(this.state.lapse);
+						})
 					})
 				}
 				return {running: !state.running};
-			})
+			});
 		}
 		handleClearClick = () => {
-			clearInterval(this.timer)
+			clearInterval(this.timer);
 			this.setState({lapse:0,running:false});
+		}
+		componentWillUnmount(){
+			clearInterval(this.timer);
 		}
 		render(){
 			const {lapse,running} = this.state;
@@ -42,7 +63,7 @@
 			)
 		}
 	}
-	const element = <StopWatch />
+	const element = <Watch />
 	ReactDOM.render(element, document.getElementById('root'));
 	</script>
 </body>
