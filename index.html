@@ -24,7 +24,7 @@
 						user(login:"${this.props.username}") {company}
 					}`
 				},
-				headers: {Authorization: `bearer c8d30e479c80c71ecff2da3f63a71895e3325f9f`}
+				headers: {Authorization: `bearer TOKEN`}
 			}).then( response => {
 				this.setState({loaded:true, company: response.data.data.user.company})
 			}, error => {
